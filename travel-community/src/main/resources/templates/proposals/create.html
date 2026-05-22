@@ -6,10 +6,8 @@
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-
 <div class="form-container">
     <h2>Новое предложение о путешествии</h2>
-
     <form th:action="@{/proposals/create}" th:object="${proposalRequest}" method="post">
 
         <div class="form-group">
@@ -62,9 +60,8 @@
         </div>
 
         <button type="submit" class="btn btn-submit">Опубликовать тур</button>
-        <a th:href="@{/proposals}" class="btn-link">Назад к списку</a>
+        <a th:href="@{/proposals}" class="btn-link" style="display: block; text-align: center; margin-top: 15px;">Назад к списку</a>
     </form>
 </div>
-
 </body>
 </html>

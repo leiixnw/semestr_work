@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${proposal.title}"></title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+<body>
+<div class="container proposal-details">
+    <div style="margin-bottom: 20px;">
+        <a th:href="@{/proposals}" class="btn btn-primary">← Вернуться к списку</a>
+    </div>
+
+    <h1 th:text="${proposal.title}"></h1>
+
+    <div class="details-layout">
+        <div class="main-info">
+            <img th:src="${proposal.mainImageUrl != null ? proposal.mainImageUrl : '/images/default-trip.jpg'}" class="details-img">
+            <p class="desc" th:text="${proposal.description}"></p>
+        </div>
+
+        <div class="sidebar">
+            <div class="price-box">
+                <p class="rub-price" th:text="${proposal.price} + ' ₽'"></p>
+                <p class="usd-price" th:text="'Примерно: $' + ${priceInUsd} + ' USD'"></p>
+            </div>
+
+            <div class="meta-box">
+                <p><strong>Организатор:</strong> <span th:text="${proposal.organizerName}"></span></p>
+                <p><strong>Локация:</strong> <span th:text="${proposal.location}"></span></p>
+                <p><strong>Даты:</strong> <span th:text="${proposal.startDate}"></span> — <span th:text="${proposal.endDate}"></span></p>
+                <p><strong>Осталось мест:</strong> <span th:text="${proposal.maxParticipants - proposal.currentParticipants}"></span></p>
+            </div>
+
+            <sec:authorize access="hasRole('TRAVELER')">
+                <div class="apply-section">
+                    <textarea id="comment" placeholder="Ваш комментарий к заявке гиду..."></textarea>
+                    <button th:onclick="'sendApplication(' + ${proposal.id} + ')'" class="btn btn-apply">Отправить заявку</button>
+                    <div id="apply-result" class="message"></div>
+                </div>
+                <div style="margin-top: 15px;">
+                    <a th:href="@{/chat/room(proposalId=${proposal.id},receiverId=${proposal.organizerId})}" class="btn btn-primary btn-block" style="text-align: center;">Открыть чат с гидом</a>
+                </div>
+            </sec:authorize>
+        </div>
+    </div>
+</div>
+<script th:src="@{/js/main.js}"></script>
+</body>
+</html>

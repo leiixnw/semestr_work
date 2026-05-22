@@ -2,21 +2,17 @@
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Страница не найдена (404)</title>
+    <title>500 — Ошибка сервера</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body class="error-page-body">
-
 <div class="error-container">
-    <div class="error-code">404</div>
-    <h1>Упс! Страница или ресурс не найдены</h1>
-
-    <p class="error-description" th:text="${errorMessage}">Детали ошибки отсутствуют.</p>
-
+    <div class="error-code">500</div>
+    <h1>Внутренняя ошибка сервера</h1>
+    <p class="error-description" th:text="${errorMessage != null ? errorMessage : 'Произошел непредвиденный сбой. Мы уже разбираемся.'}"></p>
     <div class="error-actions">
-        <a th:href="@{/proposals}" class="btn btn-primary">Вернуться на главную</a>
+        <a th:href="@{/proposals}" class="btn btn-primary">Вернуться в безопасность</a>
     </div>
 </div>
-
 </body>
 </html>
