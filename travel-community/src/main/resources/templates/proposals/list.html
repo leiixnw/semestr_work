@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>TravelCommunity — Поиск Путешествий</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header>
+    <div class="nav-container">
+        <a th:href="@{/proposals}" class="logo">TravelCommunity</a>
+        <nav>
+            <div sec:authorize="isAuthenticated()" class="nav-auth">
+                <span class="welcome">Привет, <span sec:authentication="name">User</span>!</span>
+
+                <a th:href="@{/proposals/create}" sec:authorize="hasRole('ROLE_ORGANIZER')" class="btn btn-create">Создать тур</a>
+
+                <a th:href="@{/logout}" class="btn btn-logout">Выйти</a>
+            </div>
+            <div sec:authorize="isAnonymous()" class="nav-guest">
+                <a th:href="@{/login}" class="btn">Войти</a>
+                <a th:href="@{/signup}" class="btn btn-signup">Регистрация</a>
+            </div>
+        </nav>
+    </div>
+</header>
+
+<main class="container">
+    <h2>Доступные туры и путешествия</h2>
+
+    <div class="categories-bar">
+            <span th:each="category : ${categories}"
+                  class="category-tag"
+                  th:title="${category.description}"
+                  th:text="${category.name}">Категория</span>
+    </div>
+
+    <div class="proposals-grid">
+        <div th:each="proposal : ${proposals}" class="card">
+            <img th:src="${proposal.mainImageUrl != null ? proposal.mainImageUrl : '/images/default-trip.jpg'}" alt="Изображение тура">
+            <div class="card-content">
+                <h3><a th:href="@{/proposals/{id}(id=${proposal.id})}" th:text="${proposal.title}">Название тура</a></h3>
+                <p class="location"><span th:text="${proposal.location}">Локация</span></p>
+                <p class="dates"><span th:text="${proposal.startDate}"></span> — <span th:text="${proposal.endDate}"></span></p>
+                <p class="price">Цена: <strong th:text="${proposal.price} + ' ₽'">0 ₽</strong></p>
+                <div class="spots">
+                    Свободно мест: <span th:text="${proposal.maxParticipants - proposal.currentParticipants}"></span> из <span th:text="${proposal.maxParticipants}"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>

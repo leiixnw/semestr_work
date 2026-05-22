@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Страница не найдена (404)</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="error-page-body">
+
+<div class="error-container">
+    <div class="error-code">404</div>
+    <h1>Упс! Страница или ресурс не найдены</h1>
+
+    <p class="error-description" th:text="${errorMessage}">Детали ошибки отсутствуют.</p>
+
+    <div class="error-actions">
+        <a th:href="@{/proposals}" class="btn btn-primary">Вернуться на главную</a>
+    </div>
+</div>
+
+</body>
+</html>
