@@ -1,10 +1,17 @@
 package oris.travelcommunity.exceptions;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+import oris.travelcommunity.dto.ErrorResponse;
 
+import java.time.LocalDateTime;
+
+@RestControllerAdvice
 @ControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
@@ -26,5 +33,15 @@ public class GlobalExceptionHandler {
         model.addAttribute("status", 500);
 
         return "error/500";
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleNotFoundException(NotFoundException ex) {
+        ErrorResponse error = new ErrorResponse(
+                ex.getMessage(),
+                HttpStatus.NOT_FOUND.value(),
+                LocalDateTime.now()
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 }

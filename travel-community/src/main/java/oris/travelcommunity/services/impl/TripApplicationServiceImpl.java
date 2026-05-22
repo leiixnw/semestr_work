@@ -28,7 +28,7 @@ public class TripApplicationServiceImpl implements TripApplicationService {
     @Override
     @Transactional
     public TripApplication create(TripApplicationRequest applicationRequest, Long travelerId) {
-        TripProposal proposal = proposalRepository.findById(travelerId)
+        TripProposal proposal = proposalRepository.findById(applicationRequest.getProposalId())
                 .orElseThrow(() -> new NotFoundException("Trip proposal not found"));
         User traveler = userService.getById(travelerId);
 
