@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface CustomTripProposalRepository  {
 
-    List<TripProposal> findProposalsWithHighRatingApplicants();
+    List<TripProposal> findWithHighRatingApplicants();
 
     List<TripProposal> searchProposalsCustom(String location, String status);
 
-    List<TripProposal> findProposalsByCriteria(String location, BigDecimal minPrice);
+    List<TripProposal> findByCriteria(String location, BigDecimal minPrice);
 }

@@ -33,7 +33,6 @@ public class TripProposalServiceImpl implements TripProposalService {
                 .collect(Collectors.toList());
     }
 
-    //TODO: добавить эксепшн
     @Override
     public TripProposalDto getProposalById(Long id) {
         TripProposal proposal = tripProposalRepository.findById(id)
@@ -68,7 +67,7 @@ public class TripProposalServiceImpl implements TripProposalService {
                 .currentParticipants(entity.getCurrentParticipants())
                 .mainImageUrl(entity.getMainImageUrl())
                 .status(entity.getStatus())
-                .organizerName(entity.getOrganizer().getFullName()) // Безопасно достаем имя
+                .organizerName(entity.getOrganizer().getFullName())
                 .categoryNames(entity.getCategories().stream()
                         .map(Category::getName)
                         .collect(Collectors.toList()))

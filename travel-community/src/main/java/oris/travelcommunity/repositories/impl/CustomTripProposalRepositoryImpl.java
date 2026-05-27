@@ -20,7 +20,7 @@ public class CustomTripProposalRepositoryImpl implements CustomTripProposalRepos
     private EntityManager entityManager;
 
     @Override
-    public List<TripProposal> findProposalsWithHighRatingApplicants() {
+    public List<TripProposal> findWithHighRatingApplicants() {
         String jpql = "SELECT tp FROM TripProposal tp WHERE tp.id IN (" +
                 "  SELECT ta.proposal.id FROM TripApplication ta WHERE ta.traveler.id IN (" +
                 "    SELECT u.id FROM User u WHERE u.rating > 4.5" +
@@ -40,7 +40,7 @@ public class CustomTripProposalRepositoryImpl implements CustomTripProposalRepos
     }
 
     @Override
-    public List<TripProposal> findProposalsByCriteria(String location, BigDecimal minPrice) {
+    public List<TripProposal> findByCriteria(String location, BigDecimal minPrice) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<TripProposal> query = cb.createQuery(TripProposal.class);
         Root<TripProposal> root = query.from(TripProposal.class);

@@ -2,6 +2,7 @@ package oris.travelcommunity.models;
 
 import jakarta.persistence.*;
 import lombok.*;
+import oris.travelcommunity.models.enums.ProposalStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -48,7 +49,7 @@ public class TripProposal {
     private String mainImageUrl;
 
     @Column(nullable = false, length = 50)
-    private String status = "PLANNING";
+    private ProposalStatus status = ProposalStatus.PLANNING;
 
     @Column(nullable = false, precision = 3, scale = 2)
     private BigDecimal rating = BigDecimal.valueOf(0.0);

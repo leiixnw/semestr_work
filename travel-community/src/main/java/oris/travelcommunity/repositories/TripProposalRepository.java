@@ -6,6 +6,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import oris.travelcommunity.models.TripProposal;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -17,4 +18,5 @@ public interface TripProposalRepository extends JpaRepository<TripProposal, Long
 
     @Query("SELECT tp FROM TripProposal tp JOIN tp.categories c WHERE c.id = :categoryId AND tp.startDate >= :now")
     List<TripProposal> findFutureTripsByCategory(@Param("categoryId") Long categoryId, @Param("now") LocalDate now);
+
 }

@@ -1,7 +1,7 @@
 package oris.travelcommunity.dto;
 
 import lombok.*;
-import oris.travelcommunity.models.Category;
+import oris.travelcommunity.models.enums.ProposalStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -23,7 +23,7 @@ public class TripProposalDto {
     private Integer maxParticipants;
     private Integer currentParticipants;
     private String mainImageUrl;
-    private String status;
+    private ProposalStatus status;
     private String organizerName;
-    private List<Category> categoryNames;
+    private List<String> categoryNames;
 }
