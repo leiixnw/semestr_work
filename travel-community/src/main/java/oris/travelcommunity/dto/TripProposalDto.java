@@ -24,6 +24,7 @@ public class TripProposalDto {
     private Integer currentParticipants;
     private String mainImageUrl;
     private ProposalStatus status;
+    private Long organizerId;
     private String organizerName;
     private List<String> categoryNames;
 }
