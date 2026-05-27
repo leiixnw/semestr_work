@@ -49,8 +49,9 @@ public class User {
     @Column(nullable = false)
     private UserRole role = UserRole.ROLE_TRAVELER;
 
+    @Builder.Default
     @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @OneToMany(mappedBy = "organizer", cascade = CascadeType.ALL)
     @com.fasterxml.jackson.annotation.JsonIgnore
