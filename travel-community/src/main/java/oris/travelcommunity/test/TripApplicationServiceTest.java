@@ -1,11 +1,9 @@
-package oris.travelcommunity.services;
+package oris.travelcommunity.test;
 
 import lombok.RequiredArgsConstructor;
-import org.checkerframework.framework.qual.RequiresQualifier;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import oris.travelcommunity.dto.SignUpForm;

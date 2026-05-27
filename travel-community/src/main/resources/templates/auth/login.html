@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Вход — TravelCommunity</title>
+<head th:replace="~{fragments/header :: head('Вход')}">
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
@@ -11,20 +9,14 @@
         <h2>Авторизация</h2>
         <p class="auth-subtitle">Войдите, чтобы планировать путешествия</p>
 
-        <div th:if="${param.error}" class="alert alert-danger">
-            Неверный Email или пароль.
-        </div>
-        <div th:if="${param.logout}" class="alert alert-success">
-            Вы успешно вышли из системы.
-        </div>
-        <div th:if="${param.registered}" class="alert alert-success">
-            Регистрация успешна! Войдите под своими данными.
-        </div>
+        <div th:if="${param.error}" class="alert alert-danger">Неверный Email или пароль.</div>
+        <div th:if="${param.logout}" class="alert alert-success">Вы успешно вышли из системы.</div>
+        <div th:if="${param.registered}" class="alert alert-success">Регистрация успешна! Войдите под своими данными.</div>
 
         <form th:action="@{/login}" method="post">
             <div class="form-group">
-                <label for="username">Email адрес:</label>
-                <input type="email" id="username" name="email" required placeholder="example@mail.ru"/>
+                <label for="email">Email адрес:</label>
+                <input type="email" id="email" name="email" required placeholder="example@mail.ru"/>
             </div>
             <div class="form-group">
                 <label for="password">Пароль:</label>

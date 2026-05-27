@@ -79,7 +79,6 @@ public class TripProposalRepositoryTest {
                 BigDecimal.valueOf(2500)
         );
 
-        // Assert
         assertNotNull(results);
         assertEquals(1, results.size());
         assertEquals("Швейцария", results.get(0).getLocation());

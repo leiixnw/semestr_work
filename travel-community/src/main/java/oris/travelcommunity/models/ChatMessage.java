@@ -1,5 +1,6 @@
 package oris.travelcommunity.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class ChatMessage {
 
     @Id
@@ -19,6 +21,7 @@ public class ChatMessage {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "proposal_id", nullable = false)
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private TripProposal proposal;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -32,9 +35,11 @@ public class ChatMessage {
     @Column(name = "message_text", nullable = false, columnDefinition = "TEXT")
     private String messageText;
 
+    @Builder.Default
     @Column(name = "is_read", nullable = false)
     private Boolean isRead = false;
 
+    @Builder.Default
     @Column(name = "sent_at", updatable = false)
     private LocalDateTime sentAt = LocalDateTime.now();
 }

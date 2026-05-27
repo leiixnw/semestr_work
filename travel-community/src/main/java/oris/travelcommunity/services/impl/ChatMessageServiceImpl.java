@@ -14,6 +14,7 @@ import oris.travelcommunity.repositories.UserRepository;
 import oris.travelcommunity.services.ChatMessageService;
 import oris.travelcommunity.services.UserService;
 
+
 import java.util.List;
 
 @Service
@@ -22,7 +23,7 @@ public class ChatMessageServiceImpl implements ChatMessageService {
 
     private final ChatMessageRepository chatMessageRepository;
     private final TripProposalRepository tripProposalRepository;
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
     @Override
     @Transactional

@@ -25,9 +25,11 @@ public class Category {
     @Column(length = 500)
     private String description;
 
+    @Builder.Default
     @Column(name = "usage_count")
     private Integer usageCount = 0;
 
+    @Builder.Default
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 

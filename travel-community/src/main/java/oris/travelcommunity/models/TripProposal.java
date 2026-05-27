@@ -39,21 +39,27 @@ public class TripProposal {
     @Column(name = "end_date", nullable = false)
     private LocalDate endDate;
 
+    @Builder.Default
     @Column(name = "max_participants", nullable = false)
     private Integer maxParticipants = 1;
 
+    @Builder.Default
     @Column(name = "current_participants", nullable = false)
     private Integer currentParticipants = 0;
 
     @Column(name = "main_image_url", length = 500)
     private String mainImageUrl;
 
+    @Builder.Default
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 50)
     private ProposalStatus status = ProposalStatus.PLANNING;
 
+    @Builder.Default
     @Column(nullable = false, precision = 3, scale = 2)
     private BigDecimal rating = BigDecimal.valueOf(0.0);
 
+    @Builder.Default
     @Column(name = "reviews_count", nullable = false)
     private Integer reviewsCount = 0;
 
@@ -69,9 +75,11 @@ public class TripProposal {
     )
     private List<Category> categories;
 
+    @Builder.Default
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    @Builder.Default
     @Column(name = "updated_at")
     private LocalDateTime updatedAt = LocalDateTime.now();
 }

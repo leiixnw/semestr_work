@@ -36,12 +36,15 @@ public class User {
     @Column(name = "profile_image_url")
     private String profileImageUrl;
 
+    @Builder.Default
     @Column(nullable = false)
     private BigDecimal rating = BigDecimal.valueOf(0.0);
 
+    @Builder.Default
     @Column(nullable = false)
     private Integer reviewsCount = 0;
 
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private UserRole role = UserRole.ROLE_TRAVELER;
@@ -50,5 +53,6 @@ public class User {
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "organizer", cascade = CascadeType.ALL)
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private List<TripProposal> organizedTrips;
 }

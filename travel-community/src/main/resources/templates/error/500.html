@@ -1,21 +1,16 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Внутренняя ошибка сервера (500)</title>
+<head th:replace="~{fragments/header :: head('500 — Ошибка сервера')}">
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body class="error-page-body">
-
 <div class="error-container">
     <div class="error-code">500</div>
-    <h1>Что-то пошло не так...</h1>
-    <p class="error-description" th:text="${errorMessage}">На сервере произошла непредвиденная ошибка. Мы уже работаем над её исправлением.</p>
-
+    <h1>Внутренняя ошибка сервера</h1>
+    <p class="error-description" th:text="${errorMessage != null ? errorMessage : 'Произошёл непредвиденный сбой. Мы уже разбираемся.'}"></p>
     <div class="error-actions">
-        <a th:href="@{/proposals}" class="btn btn-primary">Попробовать снова</a>
+        <a th:href="@{/proposals}" class="btn btn-primary">Вернуться на главную</a>
     </div>
 </div>
-
 </body>
 </html>

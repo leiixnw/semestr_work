@@ -1,10 +1,9 @@
 package oris.travelcommunity.services;
 
-import lombok.RequiredArgsConstructor;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import tools.jackson.databind.JsonNode;
-import tools.jackson.databind.ObjectMapper;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -15,10 +14,9 @@ import java.net.http.HttpResponse;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor
 public class CurrencyConversionService {
 
-    private final ObjectMapper objectMapper;
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     private final HttpClient httpClient = HttpClient.newHttpClient();
 
     public BigDecimal convertRubToUsd(BigDecimal priceInRub) {
@@ -31,10 +29,9 @@ public class CurrencyConversionService {
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() == 200) {
-                JsonNode root = objectMapper.readTree(response.body());
-                double rubToUsdRate = root.path("rates").path("USD").asDouble();
-
-                return priceInRub.multiply(BigDecimal.valueOf(rubToUsdRate))
+                JsonNode root = OBJECT_MAPPER.readTree(response.body());
+                double rate = root.path("rates").path("USD").asDouble();
+                return priceInRub.multiply(BigDecimal.valueOf(rate))
                         .setScale(2, RoundingMode.HALF_UP);
             }
         } catch (Exception e) {

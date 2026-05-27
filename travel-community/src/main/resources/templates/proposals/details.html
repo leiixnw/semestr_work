@@ -1,30 +1,43 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-<head>
-    <meta charset="UTF-8">
-    <title th:text="${proposal.title}"></title>
+<head th:replace="~{fragments/header :: head(${proposal.title})}">
     <link rel="stylesheet" th:href="@{/css/style.css}">
-    <meta name="_csrf" th:content="${_csrf.token}"/>
-    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
 </head>
 <body>
-<div class="container proposal-details">
-    <div style="margin-bottom: 20px;">
+<div th:replace="~{fragments/header :: navbar}"></div>
+
+<main class="container proposal-details">
+    <div th:replace="~{fragments/header :: flash-messages}"></div>
+
+    <div style="margin-bottom: 20px; display:flex; gap:10px; align-items:center;">
         <a th:href="@{/proposals}" class="btn btn-primary">← Вернуться к списку</a>
+        <th:block sec:authorize="hasRole('ORGANIZER')" th:if="${currentUser != null and currentUser.id == proposal.organizerId}">
+            <a th:href="@{/proposals/{id}/edit(id=${proposal.id})}" class="btn">Редактировать</a>
+            <form th:action="@{/proposals/{id}/delete(id=${proposal.id})}" method="post" style="display:inline"
+                  onsubmit="return confirm('Удалить этот тур?')">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                <button type="submit" class="btn btn-logout">Удалить</button>
+            </form>
+        </th:block>
     </div>
 
     <h1 th:text="${proposal.title}"></h1>
 
     <div class="details-layout">
         <div class="main-info">
-            <img th:src="${proposal.mainImageUrl != null ? proposal.mainImageUrl : '/images/default-trip.jpg'}" class="details-img">
+            <img th:src="${proposal.mainImageUrl != null ? proposal.mainImageUrl : '/images/default-trip.jpg'}" class="details-img" alt="Тур">
             <p class="desc" th:text="${proposal.description}"></p>
+
+            <div th:if="${!#lists.isEmpty(proposal.categoryNames)}" style="margin-top:12px;">
+                <strong>Категории:</strong>
+                <span th:each="cat : ${proposal.categoryNames}" class="category-tag" th:text="${cat}"></span>
+            </div>
         </div>
 
         <div class="sidebar">
             <div class="price-box">
                 <p class="rub-price" th:text="${proposal.price} + ' ₽'"></p>
-                <p class="usd-price" th:text="'Примерно: $' + ${priceInUsd} + ' USD'"></p>
+                <p class="usd-price" th:text="'≈ $' + ${priceInUsd} + ' USD'"></p>
             </div>
 
             <div class="meta-box">
@@ -32,21 +45,24 @@
                 <p><strong>Локация:</strong> <span th:text="${proposal.location}"></span></p>
                 <p><strong>Даты:</strong> <span th:text="${proposal.startDate}"></span> — <span th:text="${proposal.endDate}"></span></p>
                 <p><strong>Осталось мест:</strong> <span th:text="${proposal.maxParticipants - proposal.currentParticipants}"></span></p>
+                <p><strong>Статус:</strong> <span th:text="${proposal.status}"></span></p>
             </div>
 
             <sec:authorize access="hasRole('TRAVELER')">
                 <div class="apply-section">
-                    <textarea id="comment" placeholder="Ваш комментарий к заявке гиду..."></textarea>
+                    <textarea id="comment" placeholder="Ваш комментарий к заявке..."></textarea>
                     <button th:onclick="'sendApplication(' + ${proposal.id} + ')'" class="btn btn-apply">Отправить заявку</button>
                     <div id="apply-result" class="message"></div>
                 </div>
                 <div style="margin-top: 15px;">
-                    <a th:href="@{/chat/room(proposalId=${proposal.id},receiverId=${proposal.organizerId})}" class="btn btn-primary btn-block" style="text-align: center;">Открыть чат с гидом</a>
+                    <a th:href="@{/chat/room(proposalId=${proposal.id},receiverId=${proposal.organizerId})}"
+                       class="btn btn-primary" style="display:block; text-align:center;">Открыть чат с гидом</a>
                 </div>
             </sec:authorize>
         </div>
     </div>
-</div>
+</main>
+
 <script th:src="@{/js/main.js}"></script>
 </body>
 </html>

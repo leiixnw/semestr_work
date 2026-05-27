@@ -7,6 +7,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import org.springframework.stereotype.Repository;
 import oris.travelcommunity.models.TripProposal;
 import oris.travelcommunity.repositories.CustomTripProposalRepository;
 
@@ -14,6 +15,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class CustomTripProposalRepositoryImpl implements CustomTripProposalRepository {
 
     @PersistenceContext

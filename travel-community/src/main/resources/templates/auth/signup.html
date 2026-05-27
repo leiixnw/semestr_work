@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="ru" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <title>Регистрация — TravelCommunity</title>
+<head th:replace="~{fragments/header :: head('Регистрация')}"
     <link rel="stylesheet" th:href="@{/css/style.css}">
-</head>
+></head>
 <body>
 <div class="auth-container">
     <div class="auth-card">
@@ -20,7 +18,7 @@
                 <p th:if="${#fields.hasErrors('fullName')}" th:errors="*{fullName}" class="error-message"></p>
             </div>
             <div class="form-group">
-                <label for="username">Имя пользователя (Никнейм):</label>
+                <label for="username">Имя пользователя:</label>
                 <input type="text" th:field="*{username}" id="username" required placeholder="ivan_travel"/>
                 <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="error-message"></p>
             </div>
@@ -37,9 +35,10 @@
             <div class="form-group">
                 <label for="role">Ваша роль:</label>
                 <select th:field="*{role}" id="role" required>
-                    <option value="TRAVELER">Хочу искать туры и путешествовать</option>
-                    <option value="ORGANIZER">Я гид / Организатор туров</option>
+                    <option value="ROLE_TRAVELER">Хочу искать туры и путешествовать</option>
+                    <option value="ROLE_ORGANIZER">Я гид / Организатор туров</option>
                 </select>
+                <p th:if="${#fields.hasErrors('role')}" th:errors="*{role}" class="error-message"></p>
             </div>
             <button type="submit" class="btn btn-primary btn-block">Зарегистрироваться</button>
         </form>

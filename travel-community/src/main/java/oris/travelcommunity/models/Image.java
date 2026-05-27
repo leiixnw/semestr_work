@@ -33,9 +33,11 @@ public class Image {
     @Column(name = "image_url", nullable = false, length = 500)
     private String imageUrl;
 
+    @Builder.Default
     @Column(name = "image_order")
     private Integer imageOrder = 0;
 
+    @Builder.Default
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 }

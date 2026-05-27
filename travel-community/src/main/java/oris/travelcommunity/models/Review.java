@@ -36,9 +36,11 @@ public class Review {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String comment;
 
+    @Builder.Default
     @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    @Builder.Default
     @Column(name = "updated_at")
     private LocalDateTime updatedAt = LocalDateTime.now();
 }

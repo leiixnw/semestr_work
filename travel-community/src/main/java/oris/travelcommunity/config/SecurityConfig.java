@@ -17,7 +17,8 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     private final String[] PERMIT_ALL = {
-            "/", "/signup", "/login", "/css/**", "/js/**", "/images/**"
+            "/", "/signup", "/login", "/css/**", "/js/**", "/images/**",
+            "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**"
     };
 
     @Bean
@@ -31,9 +32,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(PERMIT_ALL).permitAll()
 
-                        .requestMatchers("/proposals/create", "/proposals/my", "/applications/*/status").hasRole("ROLE_ORGANIZER")
+                        .requestMatchers("/proposals/create", "/proposals/my", "/proposals/*/edit", "/proposals/*/delete").hasRole("ORGANIZER")
 
-                        .requestMatchers("/proposals/*/apply", "/reviews/leave").hasRole("ROLE_TRAVELER")
+                        .requestMatchers("/proposals/*/apply", "/reviews/leave").hasRole("TRAVELER")
 
                         .anyRequest().authenticated()
                 )
