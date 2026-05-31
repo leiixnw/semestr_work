@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Редактировать тур')}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <title>Редактировать</title>
+</head>
+<body>
+<div th:replace="~{fragments/header :: navbar}"></div>
+
+<main class="container">
+    <div class="form-container">
+        <h2>Редактировать тур: <span th:text="${proposal.title}"></span></h2>
+        <form th:action="@{/proposals/{id}/edit(id=${proposal.id})}" th:object="${proposalRequest}" method="post">
+
+            <div class="form-group">
+                <label for="title">Название тура:</label>
+                <input type="text" th:field="*{title}" id="title" required/>
+                <p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="error-message"></p>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Описание программы:</label>
+                <textarea th:field="*{description}" id="description" rows="5" required></textarea>
+                <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error-message"></p>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="price">Стоимость (₽):</label>
+                    <input type="number" th:field="*{price}" id="price" min="0" required/>
+                </div>
+                <div class="form-group">
+                    <label for="maxParticipants">Макс. участников:</label>
+                    <input type="number" th:field="*{maxParticipants}" id="maxParticipants" min="1" required/>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="startDate">Дата начала:</label>
+                    <input type="date" th:field="*{startDate}" id="startDate" required/>
+                </div>
+                <div class="form-group">
+                    <label for="endDate">Дата окончания:</label>
+                    <input type="date" th:field="*{endDate}" id="endDate" required/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="location">Локация / Регион:</label>
+                <input type="text" th:field="*{location}" id="location" required/>
+            </div>
+
+            <div class="form-group">
+                <label>Выберите категории:</label>
+                <div class="checkbox-group">
+                    <label th:each="cat : ${categories}" class="checkbox-label">
+                        <input type="checkbox" name="categoryIds" th:value="${cat.id}"
+                               th:checked="${proposal.categoryNames != null and proposal.categoryNames.contains(cat.name)}"/>
+                        <span th:text="${cat.name}"></span>
+                    </label>
+                </div>
+            </div>
+
+            <div style="display:flex; gap:10px; margin-top:20px;">
+                <button type="submit" class="btn btn-submit">Сохранить изменения</button>
+                <a th:href="@{/proposals/{id}(id=${proposal.id})}" class="btn">Отмена</a>
+            </div>
+        </form>
+    </div>
+</main>
+</body>
+</html>
